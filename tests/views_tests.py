@@ -1,4 +1,3 @@
-import os
 from unittest import mock
 
 from django.test import TestCase, Client, AsyncClient
@@ -36,7 +35,6 @@ class CsvFileStorageServiceTest(TestCase):
 
         c = AsyncClient()
         response = await c.post('/fetch/', {})
-        print(response)
         self.assertEqual(response.status_code, 302)
 
     @mock.patch('reports.views.get_file_storage_service')

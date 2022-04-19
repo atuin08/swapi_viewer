@@ -12,7 +12,7 @@ class CsvFileStorageService:
         self.view_columns = os.environ.get("SWAPI_COLUMNS")
 
     def get_all_files_metadata(self):
-        return Reports.objects.all()
+        return Reports.get_all_reports()
 
     def save_responses_to_csv(self, responses, file_name, homeworld_map_function):
         petl_table = None
@@ -56,5 +56,5 @@ class CsvFileStorageService:
         return str(datetime.strptime(input_str, "%Y-%m-%dT%H:%M:%S.%fZ").date().isoformat())
 
     def _load_csv_table_by_report_id(self, report_uid):
-        file_name = Reports.objects.get(guid=report_uid).file_name
+        file_name = Reports.get_report_by_uid(report_uid).file_name
         return petl.fromcsv(f'data/{file_name}')
