@@ -2,8 +2,9 @@ import os
 from collections import OrderedDict
 from datetime import datetime
 
-from reports.models import Reports
 import petl
+
+from reports.models import Reports
 
 
 class CsvFileStorageService:
