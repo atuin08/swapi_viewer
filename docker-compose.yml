@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - SWAPI_BASE_URL=https://swapi.dev/api/
+      - SWAPI_COLUMNS=name,height,mass,hair_color,skin_color,eye_color,birth_year,gender,homeworld,edited
+      - SWAPI_VIEW_COLUMNS=name,height,mass,hair_color,skin_color,eye_color,birth_year,gender,homeworld,date

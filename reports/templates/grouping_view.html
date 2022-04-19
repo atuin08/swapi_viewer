@@ -1,0 +1,26 @@
+<h3>Report id: {{ report_id }}</h3>
+
+<a href="/">Home</a>
+<a href="/report/{{ report_id }}">Normal View</a>
+
+<div>
+    {% for column in all_columns %}
+        <a href="/report/{{ report_id }}/grouping?grouped_columns={{ grouped_columns }}&selected_column={{ column }}">{{ column }}</a>
+    {% endfor %}
+</div>
+
+<table>
+  <tr>
+    {% for column in grouped_columns_list %}
+        <th>{{ column }}</th>
+    {% endfor %}
+  </tr>
+
+    {% for data_row in rows %}
+      <tr>
+          {% for value in data_row %}
+          <td> {{ value }} </td>
+          {% endfor %}
+      </tr>
+    {% endfor %}
+</table>

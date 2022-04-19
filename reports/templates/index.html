@@ -1,0 +1,13 @@
+<form action="{% url 'fetch' %}" method="post">
+    {% csrf_token %}
+    <div>
+        <input type="submit" value="Download the latest SWAPI content">
+    </div>
+    <h4>List of SWAPI reports</h4>
+    <ul>
+        {% for swapi_report in swapi_reports %}
+            <li><a href="/report/{{ swapi_report.guid }}/">{{ swapi_report.file_name }} -
+                Data: {{ swapi_report.created_date }}</a></li>
+        {% endfor %}
+    </ul>
+</form>

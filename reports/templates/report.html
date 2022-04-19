@@ -1,0 +1,22 @@
+<h3>Report id: {{ report_id }}</h3>
+
+<a href="/">Home</a>
+<a href="/report/{{ report_id }}/?rows_count={{ rows_count|add:"10" }}">Load more</a>
+<a href="/report/{{ report_id }}/grouping?rows_count={{ rows_count|add:"10" }}">Grouping View</a>
+
+<table>
+  <tr>
+    {% for column in columns %}
+        <th>{{ column }}</th>
+    {% endfor %}
+  </tr>
+
+    {% for data_row in rows %}
+      <tr>
+          {% for value in data_row %}
+          <td> {{ value }} </td>
+          {% endfor %}
+      </tr>
+    {% endfor %}
+</table>
+
