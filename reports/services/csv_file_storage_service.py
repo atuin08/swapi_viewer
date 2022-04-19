@@ -26,15 +26,12 @@ class CsvFileStorageService:
         table_filtered_columns = petl.cat(petl_table, header=self.view_columns.split(","))
         table_date_header_modified = petl.rename(table_filtered_columns, 'edited', 'date')
         date_formatted = petl.convert(table_date_header_modified, 'date',
-                                      self.convert_date_from_swapi)
+                                      self._convert_date_from_swapi)
 
         homeworld_mapped = petl.convert(date_formatted, 'homeworld',
                                         homeworld_map_function)
 
         petl.tocsv(homeworld_mapped, f'data/{file_name}')
-
-    def convert_date_from_swapi(self, input_str):
-        return str(datetime.strptime(input_str, "%Y-%m-%dT%H:%M:%S.%fZ").date().isoformat())
 
     def get_csv_data(self, report_uid, start_row_number, end_row_number):
         csv_table = self._load_csv_table_by_report_id(report_uid)
@@ -54,6 +51,9 @@ class CsvFileStorageService:
             aggregated_table = petl.aggregate(csv_table, key=tuple(columns_list), aggregation=aggregation)
 
         return list(petl.data(aggregated_table))
+
+    def _convert_date_from_swapi(self, input_str):
+        return str(datetime.strptime(input_str, "%Y-%m-%dT%H:%M:%S.%fZ").date().isoformat())
 
     def _load_csv_table_by_report_id(self, report_uid):
         file_name = Reports.objects.get(guid=report_uid).file_name
