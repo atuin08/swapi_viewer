@@ -11,7 +11,8 @@ class CsvFileStorageService:
     def __init__(self):
         self.view_columns = os.environ.get("SWAPI_COLUMNS")
 
-    def get_all_files_metadata(self):
+    @staticmethod
+    def get_all_files_metadata():
         return Reports.get_all_reports()
 
     def save_responses_to_csv(self, responses, file_name, homeworld_map_function):
@@ -52,9 +53,11 @@ class CsvFileStorageService:
 
         return list(petl.data(aggregated_table))
 
-    def _convert_date_from_swapi(self, input_str):
+    @staticmethod
+    def _convert_date_from_swapi(input_str):
         return str(datetime.strptime(input_str, "%Y-%m-%dT%H:%M:%S.%fZ").date().isoformat())
 
-    def _load_csv_table_by_report_id(self, report_uid):
+    @staticmethod
+    def _load_csv_table_by_report_id(report_uid):
         file_name = Reports.get_report_by_uid(report_uid).file_name
         return petl.fromcsv(f'data/{file_name}')

@@ -41,7 +41,8 @@ class SwapiClient:
         await sync_to_async(report.save, thread_sensitive=False)()
         return report
 
-    def _map_homeworld_to_name_with_cache(self):
+    @staticmethod
+    def _map_homeworld_to_name_with_cache():
         cached_responses = {}
 
         def get_homeworld_name(endpoint):
